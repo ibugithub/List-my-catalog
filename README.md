@@ -1,7 +1,7 @@
 # Decode a Morse code message
 <br>
 <div align='center'>
-	<h1>OOP School Library: Person, Student, and Teacher Classes</h1>
+	<h1>Ruby group capstone - Catalog of my things</h1>
   </div>
 <a name="readme-top"></a>
 
@@ -20,9 +20,9 @@
 - [📝 License](#license)
 
 
-# 📖 Morse Code Decoder <a name="about-project"></a>
+# 📖 Ruby group capstone - Catalog of my things <a name="about-project"></a>
 
-**OOP School Library** is a Ruby project that implements classes for representing students and teachers in a school library.
+**Catalog of my things** is a Ruby project that implements classes for representing students and teachers in a school library.
 ## 🛠 Built With <a name="built-with"></a>
 
 ### Tech Stack <a name="tech-stack"></a>
@@ -34,9 +34,9 @@
 
 #### Key Features <a name="key-features"></a>
 
-- `Person` class with name, age, and parent permission.
-- `Student` class that inherits from `Person` with additional `classroom` attribute and a method `play_hooky`.
-- `Teacher` class that inherits from `Person` with additional `specialization` attribute and overridden `can_use_services?` method.
+- `Add user interactivity` It implements a command line for user to select options and interact with App.
+- `Based on UML graphic` Includes a database design that we will use later to conect to a real progres SQL.
+- `Used linters for cleaner code` No linter errors.
 
 <!-- GETTING STARTED -->
 
@@ -46,22 +46,23 @@
   https://git-scm.com/downloads and install it).
 - Step 2: Once you have installed git you can clone this project using the command below:
   ```
-  git clone https://github.com/ibugithub/School-Library
+  git clone https://github.com/ibugithub/List-my-catalog.git
   ```
 - Step 3: Once you have cloned this repo navigate to the folder that contains
   the repository.
-- Step 4: If you want to watch the html file open it with your favorite web browser(This project MUST be opened from VS Code for full functionality).
-- Step 5: If you want to edit this project open it with your favorite text editor.
+
+- Step 4: If you want to edit this project open it with your favorite text editor.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
-To get a local copy up and running cloning this repo `https://github.com/ibugithub/School-Library`.
+To get a local copy up and running cloning this repo `https://github.com/ibugithub/List-my-catalog.git`.
 
 ### Prerequisites
 
-There are no known prerequisites to run this project.
+-1 Have installed any code editor and Ruby 
+
 If you encounter any issues trying to run it, please feel free to
 [open a ticket](https://github.com/ibugithub/School-Library) to let me know and i will work on it to the best
 of my abilities
@@ -97,10 +98,10 @@ To run the project:
 - Twitter: [@twitterhandle](https://twitter.com/mdibrahimibuu)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/ibuu)
 
-## 👥 Authors <a name="authors"></a>
-👤 **JIC Software (Jorge Camargo)**
-- GitHub: [@jicamargo](https://github.com/jicamargo)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/jorgecamargog/?locale=en_US)
+👤 **Mariano Benjamin**
+- GitHub: [benja27](https://github.com/benja27)
+- LinkedIn: [Benja28](www.linkedin.com/in/mariano-benjamin-mendez-garcia-a50856177)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -114,7 +115,7 @@ To run the project:
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/ibugithub/School-Library/issues).
+Feel free to check the [issues page](https://github.com/ibugithub/List-my-catalog.git).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
