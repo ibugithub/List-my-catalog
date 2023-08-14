@@ -1,4 +1,3 @@
-# Decode a Morse code message
 <br>
 <div align='center'>
 	<h1>Ruby group capstone - Catalog of my things</h1>
