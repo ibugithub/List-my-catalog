@@ -11,39 +11,44 @@ class Options
     puts "============================"
     puts "select the option you want"
     puts "============================"
-    puts "1- create book"
-    puts "2- create Music album"
-    puts "3- create Movie"
-    puts "4- create game"
-    puts "5- show all books"
-    puts "6- show all movies"
-    puts "7- show all games"
-    puts "8- exit"    
+    puts "1- List all books"
+    puts "2- List all music albums"
+    puts "3- List all movies"    
+    puts "4- List all games"
+    puts "5- List all genres"    
+    puts "6- List all labels"    
+    puts "7- List all authors"    
+    puts "8- List all sources"    
+    puts "9- Add a book"    
+    puts "10- Add a music album"    
+    puts "11- Add  a movie"    
+    puts "12- Add  a game"    
+    puts "13- exit"    
     option = gets.chomp.to_i 
     send_option(option)
   end
 
   def send_option(option)
     options = {
-      1 => :create_book,
-      2 => :create_book,
-      3 => :create_book,
-      4 => :create_book,
-      5 => :create_book,
-      6 => :get_info
+      1 => :List_all_books,
+      2 => :list_all_music_albums,
+      3 => :list_all_movies,
+      4 => :list_of_games,
+      5 => :List_all_genres,
+      6 => :list_all_labels,
+      7 => :list_all_authors,
+      8 => :list_of_sources,
+      9 => :add_book,
+      10 => :add_music_album,
+      11 => :add_movie,
+      12 => :add_game,
+      13 => :exit
     }
-    method = options[option]        
+    method = options[option]   
+    
     @app.send(method)
   end
-
-  def self.get_info
-    puts "author of the book"
-    author = gets.chomp
-    puts "genre of the book"
-    genre = gets.chomp
-    puts "author of the book"
-    author = gets.chomp
-  end
+  
 
 
 
