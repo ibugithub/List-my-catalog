@@ -9,7 +9,7 @@ class App
 
   def initialize(options)
     @options = options
-    @music_albums = []    
+    @music_albums = load_from_file('music_album.json')    
     @genres = []
     @sources = []
     @author = []
@@ -20,6 +20,7 @@ class App
     array_gen_info = collect_gen_info('music album')
     #it returns [pub_date, genre, f_name, l_name, source, label, label_color]
     pub_date, genre, f_name, l_name, source, label, label_color = array_gen_info
+    # pub_date, genre, f_name, l_name, source, label, label_color = collect_gen_info('music album')
     puts "is it on spotify (y) or (n)?"
     on_spotify = gets.chomp  == 'y' ? true : false
 
@@ -32,7 +33,7 @@ class App
 
     @music_albums << new_album
 
-    puts "Album creates sucessfully"
+    puts "Album created sucessfully"
 
     save_on_json(@music_albums)
 
@@ -86,7 +87,17 @@ class App
       p ele        
     end 
 
-    File.write('music_albmus.json', JSON.generate(final_data)  )
+    File.write('music_album.json', JSON.generate(final_data)  )
+
+  end
+
+  def load_from_file(file_name)
+    begin
+      data = JSON.parse(File.read(file_name))
+    rescue => exception
+      data = []
+    end
+
 
 
 
@@ -122,8 +133,8 @@ class App
     puts 'book sucessfully created'
   end
 
-  def show_music_albums 
-    return puts "no hay albunes" if @music_albums.empty?
+  def list_all_music_albums
+    return puts "albums is empty" if @music_albums.empty?
 
     # add code when there are albums
 
