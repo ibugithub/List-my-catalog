@@ -9,7 +9,8 @@ class App
 
   def initialize(options)
     @options = options
-    @music_albums = load_from_file('music_album.json')    
+    @music_albums = []
+    # load_from_file('music_album.json')    
     @genres = []
     @sources = []
     @author = []
@@ -92,11 +93,11 @@ class App
   end
 
   def load_from_file(file_name)
-    begin
-      data = JSON.parse(File.read(file_name))
-    rescue => exception
-      data = []
-    end
+    # begin
+    #   data = JSON.parse(File.read(file_name))
+    # rescue => exception
+    #   data = []
+    # end
 
 
 
