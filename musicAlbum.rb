@@ -9,6 +9,5 @@ class Music_album < Item
   end
 end
 
-albun = Music_album.new("2022-12-11",false)
 
-p albun
+

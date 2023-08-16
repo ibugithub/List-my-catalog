@@ -247,9 +247,13 @@ class App
     if @music_albums.empty?
       puts "albums is empty"      
     else  
+      puts "=============== Music_Albums =============="
       @music_albums.each do |ele|
-        p ele
+        # p ele 
+        puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author) #{ele.author.first_name} #{ele.author.first_name} ->On spotify: #{ele.on_spotify}"
+
       end
+      puts "=============== Music_Albums =============="
     end
 
     @options.show_menu
@@ -260,9 +264,13 @@ class App
       puts "there is no games"
       @options.show_menu
     else
+      puts "=============== Games =============="
       @games.each do |ele|
-        p ele
-      end      
+        # p ele 
+        puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author) #{ele.author.first_name} #{ele.author.first_name} Multiplayer-> #{ele.multiplayer} Last_played-> #{ele.last_played}"
+
+      end
+      puts "=============== Games =============="
     end
     @options.show_menu
   end
