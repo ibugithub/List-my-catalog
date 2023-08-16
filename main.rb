@@ -45,7 +45,6 @@ class Options
       13 => :exit
     }
     method = options[option]   
-    
     @app.send(method)
   end
   

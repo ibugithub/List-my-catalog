@@ -5,6 +5,7 @@ require './source'
 require './author'
 require './label'
 require 'json'
+require './book'
 
 class App
 
@@ -17,6 +18,8 @@ class App
     @options = options
     @music_albums = load_from_file('music_album.json')        
     @games = load_from_file('game.json')
+    @labels = load_from_file('labels.json')
+    @books = load_from_file('Book.json')
   end
 
   def add_music_album
@@ -81,8 +84,8 @@ class App
   end
 
   def save_on_json(array)
-     final_data = []
-     array.each do |ele|
+    final_data = []
+    array.each do |ele|
 
       data = {
         'type' => ele.class.name,
@@ -95,7 +98,6 @@ class App
         'source' => ele.source.name,
         'label' => ele.label.title,
         'label_color' => ele.label.color         
-        
       }
 
       if ele.class.name == "Music_album"
@@ -103,20 +105,14 @@ class App
       elsif ele.class.name == "Game"
         data['multiplayer'] = ele.multiplayer
         data['last_played'] = ele.last_played
+      elsif ele.class.name == "Book"
+        data['publisher'] = ele.publisher
+        data['cover_state'] = ele.cover_state
       end
-
+      p 'the data is ', data
       final_data << data      
-      
-      # p ele.class.name        
     end 
-
-    
       File.write("#{array[0].class.name}.json", JSON.generate(final_data)  )
-    
-
-    
-
-
   end
 
   def load_from_file(file_name)
@@ -129,48 +125,50 @@ class App
     final_data = []
 
     data.each do |ele|      
-     type = ele['type']
-     id = ele['id']
-     pub_date = ele['pub_date']
-     archived = ele['archived']
-     genre = ele['genre']
-     f_name = ele['first_name']
-     l_name = ele['last_name']
-     source = ele['source']
-     label = ele['label']
-     label_color = ele['label_color']
-     on_spotify = ele['on_spotify']
-     multiplayer = ele['multiplayer']
-     last_played = ele['last_played']
+      type = ele['type']
+      id = ele['id']
+      pub_date = ele['pub_date']
+      archived = ele['archived']
+      genre = ele['genre']
+      f_name = ele['first_name']
+      l_name = ele['last_name']
+      source = ele['source']
+      label = ele['label']
+      label_color = ele['label_color']
+      on_spotify = ele['on_spotify']
+      multiplayer = ele['multiplayer']
+      last_played = ele['last_played']
+      publisher = ele['publisher']   
+      cover_state = ele['cover_state'] 
+
       
-    if ele['type'] == "Music_album"
-      new_item = Music_album.new( pub_date , on_spotify)          
-    elsif ele['type'] == "Game"
-      new_item = Game.new( pub_date , multiplayer, last_played)
-    end
-     
-     genre_obj = Genre.new(genre)
-    #  p new_item
-     @@genres << genre_obj
-     new_item.genre = genre_obj
- 
-     author_obj = Author.new(f_name, l_name)
-     @@authors << author_obj
-     new_item.author = author_obj
-     
-     source_obj = Source.new(source)
-     @@sources << source_obj
-     new_item.source = source_obj
-     
-     label_obj = Label.new(label, label_color)
-     @@labels << label_obj
-     new_item.label = label_obj      
+      if ele['type'] == "Music_album"
+        new_item = Music_album.new( pub_date , on_spotify)          
+      elsif ele['type'] == "Game"
+        new_item = Game.new( pub_date , multiplayer, last_played)
+      elsif ele['type'] == "Book"
+        new_item = Book.new( pub_date, publisher , cover_state)
+      end
+
+      unless data.nil?
+        genre_obj = Genre.new(genre)
+        @@genres << genre_obj
+        new_item.genre = genre_obj
     
-    final_data << new_item
+        author_obj = Author.new(f_name, l_name)
+        @@authors << author_obj
+        new_item.author = author_obj
+        
+        source_obj = Source.new(source)
+        @@sources << source_obj
+        new_item.source = source_obj
+        
+        label_obj = Label.new(label, label_color)
+        @@labels << label_obj
+        new_item.label = label_obj      
+        final_data << new_item
+      end
     end    
-
-    final_data        
-
   end    
 
   def add_game
@@ -182,7 +180,7 @@ class App
     puts "last played date? format: yyyy-mm--dd"
     date = gets.chomp
 
-    new_item = Game.new('2022-10-13', multiplayer, date)
+    new_item = Game.new('2022-10-13', multiplayer, date)    
 
     genre_obj = Genre.new(genre)
     @@genres << genre_obj
@@ -207,6 +205,42 @@ class App
 
     @options.show_menu
     
+  end
+
+  def add_book
+    gen_info = collect_gen_info('book')
+    pub_date, genre, f_name, l_name, source, label, label_color = gen_info
+
+    puts "Write the name of the publisher:  "
+    publisher = gets.chomp
+
+    puts "what will be the cover state for this book: "
+    cover_state = gets.chomp
+
+    book = Book.new(pub_date, publisher, cover_state)    
+
+    genre_obj = Genre.new(genre)
+    @@genres << genre_obj
+    book.genre = genre_obj
+
+    author_obj = Author.new(f_name, l_name)
+    @@authors << author_obj
+    book.author = author_obj
+    
+    source_obj = Source.new(source)
+    @@sources << source_obj
+    book.source = source_obj
+    
+    label_obj = Label.new(label, label_color)
+    @@labels << label_obj
+    book.label = label_obj
+
+    @books << book
+
+    save_on_json(@books)
+    puts "books sucessfullly created"
+
+    @options.show_menu
   end
 
   def list_all_music_albums
@@ -248,6 +282,8 @@ class App
     if @@labels.empty?
       puts "there is no labels"      
     else 
+      puts "no the labels arn't empty"
+      puts 'the labels are', @@labels
       @@labels.each do |ele|
         p ele
       end
@@ -274,6 +310,18 @@ class App
         p ele
       end
     end
+    @options.show_menu
+  end
+
+  def List_all_books
+    if @books.empty?
+      puts "books is empty"      
+    else  
+      @books.each do |ele|
+        p ele
+      end
+    end
+
     @options.show_menu
   end
 
