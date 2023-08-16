@@ -18,25 +18,6 @@ class Book < Item
 end
 
 
-def create_book
-  pub_date = '2022-12-13'
-  publisher = 'publisher1'
-  genre = 'adventure'
-  
-  # genre_obj = Genre.new(genre)
-  
-  book1 = Book.new(pub_date, publisher)
-  
-  book1.genre = Genre.new(genre)
-  
-  p "este es el libro"
-  
-  p book1
-  # binding.pry
-end
-
-# create_book
-
 
 
 

@@ -272,7 +272,10 @@ class App
       puts "there is no genders"      
     else 
       @@genres.each do |ele|
-        p ele
+        puts '------------Genre----------------'
+        print "Title: ", ele.name 
+        puts
+        puts '-------------Genre-----------------'
       end
     end
     @options.show_menu
@@ -282,10 +285,13 @@ class App
     if @@labels.empty?
       puts "there is no labels"      
     else 
-      puts "no the labels arn't empty"
-      puts 'the labels are', @@labels
       @@labels.each do |ele|
-        p ele
+        puts '------------Labels----------------'
+        print "Title: ", ele.title 
+        puts 
+        print 'Color: ', ele.color
+        puts 
+        puts '-------------Labels-----------------'
       end
     end
     @options.show_menu
@@ -296,7 +302,10 @@ class App
       puts "there is no authors"      
     else 
       @@authors.each do |ele|
-        p ele
+        puts '------------Author----------------'
+        print "Author: ", ele.first_name
+        puts
+        puts '-------------Genre-----------------'
       end
     end
     @options.show_menu
@@ -307,7 +316,10 @@ class App
       puts "there is no sources"      
     else 
       @@sources.each do |ele|
-        p ele
+        puts '------------Source----------------'
+        print "Source: ", ele.name 
+        puts
+        puts '-------------Source-----------------'
       end
     end
     @options.show_menu
@@ -318,7 +330,18 @@ class App
       puts "books is empty"      
     else  
       @books.each do |ele|
-        p ele
+        puts '------------Books----------------'
+        print "Label: ", ele.label.title 
+        puts 
+        print 'Author: ', ele.author.first_name
+        puts 
+        print 'Publisher : ', ele.publisher
+        puts 
+        print 'Genere :', ele.genre.name
+        puts 
+        print 'Publication Date :', ele.pub_date
+        puts
+        puts '-------------Books-----------------'
       end
     end
 
