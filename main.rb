@@ -3,7 +3,7 @@ require './app'
 class Options
   def initialize
     puts "welcome to my app"
-    @app = App.new(self)    
+    @app = App.new(self)     
     show_menu
   end
 
