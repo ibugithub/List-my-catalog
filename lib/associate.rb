@@ -2,7 +2,7 @@ require 'json'
 
 class Associate
   attr_accessor :genres, :sources, :labels, :authors
-  
+
 
   def initialize
     @genres = []
@@ -35,15 +35,11 @@ class Associate
   end
 
   def extract(data)
-    p 'extraging data'
-
     final_data = []
-    # p data,'data'
 
     data.each do |ele|
       ele['type']
-      ele['id']
-      pub_date = ele['pub_date']
+      ele['pub_date']
       ele['archived']
       genre = ele['genre']
       f_name = ele['first_name']
@@ -51,38 +47,54 @@ class Associate
       source = ele['source']
       label = ele['label']
       label_color = ele['label_color']
-      on_spotify = ele['on_spotify']
-      multiplayer = ele['multiplayer']
-      last_played = ele['last_played']
-      publisher = ele['publisher']
-      cover_state = ele['cover_state']
+      # ele['on_spotify']
+      # ele['multiplayer']
+      # ele['last_played']
+      # ele['publisher']
+      # ele['cover_state']
 
-      case ele['type']
-      when 'MusicAlbum'
-        new_item = MusicAlbum.new(pub_date, on_spotify)
-      when 'Game'
-        new_item = Game.new(pub_date, multiplayer, last_played)
-      when 'Book'
-        new_item = Book.new(pub_date, publisher, cover_state)
-      end
-      
-      final_data << add_associate(new_item, genre, f_name, l_name, source, label, label_color)
+      new_item = create_item_type(ele)
+
+      type_data = new_item, genre, f_name, l_name, source, label, label_color
+
+      final_data << add_associate(type_data)
     end
 
     final_data
-    # p 'fianl data'
-    
   end
 
-  def add_associate(new_item, genre, f_name, l_name, source, label, label_color)
-    
-    genre_obj = Genre.new(genre)
-    @genres << genre_obj
-    new_item.genre = genre_obj
-    p 'adding genres'
+  def create_item_type(element)
+    type = element['type']
+    pub_date = element['pub_date']
+    on_spotify = element['on_spotify']
+    multiplayer = element['multiplayer']
+    last_played = element['last_played']
+    publisher = element['publisher']
+    cover_state = element['cover_state']
+
+
+    case type
+    when 'MusicAlbum'
+      new_item = MusicAlbum.new(pub_date, on_spotify)
+    when 'Game'
+      new_item = Game.new(pub_date, multiplayer, last_played)
+    when 'Book'
+      new_item = Book.new(pub_date, publisher, cover_state)
+    end
+    new_item
+  end
+
+  def add_associate(data)
+    new_item, genre, f_name, l_name, source, label, label_color = data
+
     author_obj = Author.new(f_name, l_name)
     @authors << author_obj
     new_item.author = author_obj
+
+    genre_obj = Genre.new(genre)
+    @genres << genre_obj
+    new_item.genre = genre_obj
+
 
     source_obj = Source.new(source)
     @sources << source_obj
@@ -95,14 +107,12 @@ class Associate
     new_item
   end
 
-  def load_from_file(file_name)   
-    
+  def load_from_file(file_name)
     begin
-      data = JSON.parse(File.read(file_name))            
+      data = JSON.parse(File.read(file_name))
     rescue StandardError
       data = []
     end
     extract(data)
   end
-
 end
