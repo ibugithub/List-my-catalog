@@ -1,14 +1,20 @@
 class Associate
+
+  
+
   def initialize
     @genres = []
     @sources = []
     @authors = []
     @labels = []
+    p 'starting asssociate'
   end
 
   def associate_item(item, gen_info)
+    p 'starting asscoiate item'
     _, genre, f_name, l_name, source, label, label_color = gen_info
     genre_obj = Genre.new(genre)
+    p 'adding genres'
     @genres << genre_obj
     item.genre = genre_obj
 
@@ -27,7 +33,10 @@ class Associate
   end
 
   def extract(data)
+    p 'extraging data'
+
     final_data = []
+
     data.each do |ele|
       ele['type']
       ele['id']
@@ -53,13 +62,17 @@ class Associate
       when 'Book'
         new_item = Book.new(pub_date, publisher, cover_state)
       end
-      final_data << add_associate(new_item, genere, f_name, l_name, source, label, label_color)
+      final_data << add_associate(new_item, genre, f_name, l_name, source, label, label_color)
+    end
+
+    final_data
   end
 
-  def add_associate(item, genere, f_name, l_name, source, label)
+  def add_associate(new_item, genre, f_name, l_name, source, label, label_color)
+    
     genre_obj = Genre.new(genre)
     @genres << genre_obj
-    new_ite
+    new_item.genre = genre_obj
 
     author_obj = Author.new(f_name, l_name)
     @authors << author_obj
@@ -85,6 +98,7 @@ class Associate
 
     extract(data)
   end
-    final_data
-  end
+
+  
+
 end

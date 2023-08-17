@@ -11,16 +11,19 @@ require './lib/associate'
 require './lib/collect_gen'
 
 class App
+
+  
   def initialize(options)
     @options = options
     @associate = Associate.new
-    p 'teh associate is ', @associate
+    # p 'teh associate is ', @associate
     @collect = Collect.new
     @music_albums = @associate.load_from_file('MusicAlbum.json')
     @games = @associate.load_from_file('game.json')
-    @labels = @associate.load_from_file('labels.json')
     @books = @associate.load_from_file('Book.json')
     @save = Save.new
+    @genres = @associate
+    p @genres
   end
 
   def add_music_album
