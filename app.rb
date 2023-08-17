@@ -32,7 +32,7 @@ class App
     on_spotify = gets.chomp == 'y'
     new_album = MusicAlbum.new('2022-12-12', on_spotify)
 
-    albuum_data = @associate.associate_item(new_album, gen_info)
+    albuum_data = @associate.associate_item(gen_info[0], gen_info)
     @music_albums << albuum_data
 
     puts 'Album created sucessfully'
