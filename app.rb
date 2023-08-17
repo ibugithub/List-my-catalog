@@ -19,11 +19,13 @@ class App
     # p 'teh associate is ', @associate
     @collect = Collect.new
     @music_albums = @associate.load_from_file('MusicAlbum.json')
-    @games = @associate.load_from_file('game.json')
+    @games = @associate.load_from_file('Game.json')
     @books = @associate.load_from_file('Book.json')
     @save = Save.new
-    @genres = @associate
-    p @genres
+    @genres = @associate.genres
+    @authors = @associate.authors
+    @sources = @associate.sources
+    @labels = @associate.labels
   end
 
   def add_music_album
@@ -105,10 +107,10 @@ class App
   end
 
   def list_all_genres
-    if @@genres.empty?
+    if @genres.empty?
       puts 'there is no genders'
     else
-      @@genres.each do |ele|
+      @genres.each do |ele|
         puts '------------Genre----------------'
         print 'Title: ', ele.name
         puts
@@ -119,10 +121,10 @@ class App
   end
 
   def list_all_labels
-    if @@labels.empty?
+    if @labels.empty?
       puts 'there is no labels'
     else
-      @@labels.each do |ele|
+      @labels.each do |ele|
         puts '------------Labels----------------'
         print 'Title: ', ele.title
         puts
@@ -135,10 +137,10 @@ class App
   end
 
   def list_all_authors
-    if @@authors.empty?
+    if @authors.empty?
       puts 'there is no authors'
     else
-      @@authors.each do |ele|
+      @authors.each do |ele|
         puts '------------Author----------------'
         print 'Author: ', ele.first_name
         puts
@@ -149,10 +151,10 @@ class App
   end
 
   def list_all_sources
-    if @@sources.empty?
+    if @sources.empty?
       puts 'there is no sources'
     else
-      @@sources.each do |ele|
+      @sources.each do |ele|
         puts '------------Source----------------'
         print 'Source: ', ele.name
         puts
