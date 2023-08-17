@@ -1,4 +1,4 @@
-require './musicAlbum'
+require './music_album'
 require './game'
 require './genre'
 require './source'
@@ -6,282 +6,108 @@ require './author'
 require './label'
 require 'json'
 require './book'
+require './lib/save_items'
+require './lib/associate'
+require './lib/collect_gen'
 
 class App
-
-  @@genres = []
-  @@sources = []
-  @@authors = []
-  @@labels = []
-
   def initialize(options)
     @options = options
-    @music_albums = load_from_file('music_album.json')        
-    @games = load_from_file('game.json')
-    @labels = load_from_file('labels.json')
-    @books = load_from_file('Book.json')
+    @associate = Associate.new
+    p 'teh associate is ', @associate
+    @collect = Collect.new
+    @music_albums = @associate.load_from_file('MusicAlbum.json')
+    @games = @associate.load_from_file('game.json')
+    @labels = @associate.load_from_file('labels.json')
+    @books = @associate.load_from_file('Book.json')
+    @save = Save.new
   end
 
   def add_music_album
-    array_gen_info = collect_gen_info('music album')
-    #it returns [pub_date, genre, f_name, l_name, source, label, label_color]
-    pub_date, genre, f_name, l_name, source, label, label_color = array_gen_info
-    # pub_date, genre, f_name, l_name, source, label, label_color = collect_gen_info('music album')
-    puts "is it on spotify (y) or (n)?"
-    on_spotify = gets.chomp  == 'y' ? true : false
+    gen_info = @collect.collect_gen_info('music album')
+    puts 'is it on spotify (y) or (n)?'
+    on_spotify = gets.chomp == 'y'
+    new_album = MusicAlbum.new('2022-12-12', on_spotify)
 
-    # new_album = Music_album.new(pub_date, on_spotify)
-    new_album = Music_album.new( '2022-12-12' , on_spotify)
+    albuum_data = @associate.associate_item(new_album, gen_info)
+    @music_albums << albuum_data
 
-    genre_obj = Genre.new(genre)
-    @@genres << genre_obj
-    new_album.genre = genre_obj
-
-    author_obj = Author.new(f_name, l_name)
-    @@authors << author_obj
-    new_album.author = author_obj
-    
-    source_obj = Source.new(source)
-    @@sources << source_obj
-    new_album.source = source_obj
-    
-    label_obj = Label.new(label, label_color)
-    @@labels << label_obj
-    new_album.label = label_obj
-
-    @music_albums << new_album
-
-    puts "Album created sucessfully"
-
-    save_on_json(@music_albums)
-
+    puts 'Album created sucessfully'
+    @save.save_on_json(@music_albums)
     @options.show_menu
   end
-
-  def collect_gen_info(item)
-    puts "insert the publish date, use this format : yyyy-mm-dd"
-    pub_date = gets.chomp 
-
-    puts "genre of the #{item}?"
-    genre = gets.chomp
-
-    puts "first name of the author?"
-    first_name_author = gets.chomp
-
-    puts "last name of the author?"
-    last_name_author = gets.chomp
-    
-    puts "source of the #{item}?"
-    source = gets.chomp
-
-    puts "label of the #{item}?"
-    label = gets.chomp
-
-    puts "label color of the #{item}?"
-    label_color = gets.chomp
-    
-    return [pub_date, genre, first_name_author, last_name_author, source, label, label_color]
-  end
-
-  def save_on_json(array)
-    final_data = []
-    array.each do |ele|
-
-     data = {
-       'type' => ele.class.name,
-       'id' => ele.id,
-       'pub_date' => ele.pub_date,
-       'archived' => ele.archived,
-       'genre' => ele.genre.name,
-       'first_name' => ele.author.first_name,
-       'last_name' => ele.author.last_name,
-       'source' => ele.source.name,
-       'label' => ele.label.title,
-       'label_color' => ele.label.color         
-     }
-
-     if ele.class.name == "Music_album"
-       data['on_spotify'] = ele.on_spotify
-     elsif ele.class.name == "Game"
-       data['multiplayer'] = ele.multiplayer
-       data['last_played'] = ele.last_played
-     elsif ele.class.name == "Book"
-       data['publisher'] = ele.publisher
-       data['cover_state'] = ele.cover_state
-     end
-     final_data << data            
-   end 
-    File.write("#{array[0].class.name}.json", JSON.generate(final_data)  )
-  end
-
- def load_from_file(file_name)
-   begin
-     data = JSON.parse(File.read(file_name))
-   rescue => exception
-     data = []
-   end
-
-   final_data = []
-
-   data.each do |ele|      
-    type = ele['type']
-    id = ele['id']
-    pub_date = ele['pub_date']
-    archived = ele['archived']
-    genre = ele['genre']
-    f_name = ele['first_name']
-    l_name = ele['last_name']
-    source = ele['source']
-    label = ele['label']
-    label_color = ele['label_color']
-    on_spotify = ele['on_spotify']
-    multiplayer = ele['multiplayer']
-    last_played = ele['last_played']
-    publisher = ele['publisher']
-    cover_state = ele['cover_state']
-     
-   if ele['type'] == "Music_album"
-     new_item = Music_album.new( pub_date , on_spotify)          
-   elsif ele['type'] == "Game"
-     new_item = Game.new( pub_date , multiplayer, last_played) 
-   elsif ele['type'] == "Book"
-     new_item = Book.new( pub_date , publisher, cover_state)
-   end
-    
-    genre_obj = Genre.new(genre)
-    @@genres << genre_obj
-    new_item.genre = genre_obj
-
-    author_obj = Author.new(f_name, l_name)
-    @@authors << author_obj
-    new_item.author = author_obj
-    
-    source_obj = Source.new(source)
-    @@sources << source_obj
-    new_item.source = source_obj
-    
-    label_obj = Label.new(label, label_color)
-    @@labels << label_obj
-    new_item.label = label_obj      
-   
-   final_data << new_item
-   end    
-
-   final_data        
-
- end    
 
   def add_game
-    gen_info = collect_gen_info('game')
-    pub_date, genre, f_name, l_name, source, label, label_color = gen_info
-
-    puts "is the game multiplayer? (y) or (n)? "
+    gen_info = @collect.collect_gen_info('game')
+    puts 'is the game multiplayer? (y) or (n)? '
     multiplayer = gets.chomp
-    puts "last played date? format: yyyy-mm--dd"
+    puts 'last played date? format: yyyy-mm--dd'
     date = gets.chomp
+    new_item = Game.new('2022-10-13', multiplayer, date)
 
-    new_item = Game.new('2022-10-13', multiplayer, date)    
-
-    genre_obj = Genre.new(genre)
-    @@genres << genre_obj
-    new_item.genre = genre_obj
-
-    author_obj = Author.new(f_name, l_name)
-    @@authors << author_obj
-    new_item.author = author_obj
-    
-    source_obj = Source.new(source)
-    @@sources << source_obj
-    new_item.source = source_obj
-    
-    label_obj = Label.new(label, label_color)
-    @@labels << label_obj
-    new_item.label = label_obj
-
-    @games << new_item
-
-    save_on_json(@games)
-    puts "game sucessfullly created"
-
+    game_data = @associate.associate_item(new_item, gen_info)
+    @games << game_data
+    @save.save_on_json(@games)
+    puts 'game sucessfullly created'
     @options.show_menu
-    
   end
 
   def add_book
-    gen_info = collect_gen_info('book')
-    pub_date, genre, f_name, l_name, source, label, label_color = gen_info
-
-    puts "Write the name of the publisher:  "
+    gen_info = @collect.collect_gen_info('book')
+    pub_date = gen_info[0]
+    puts 'Write the name of the publisher:  '
     publisher = gets.chomp
-
-    puts "what will be the cover state for this book: "
+    puts 'what will be the cover state for this book: '
     cover_state = gets.chomp
+    book = Book.new(pub_date, publisher, cover_state)
 
-    book = Book.new(pub_date, publisher, cover_state)    
+    book_data = @associate.associate_item(book, gen_info)
+    @books << book_data
 
-    genre_obj = Genre.new(genre)
-    @@genres << genre_obj
-    book.genre = genre_obj
-
-    author_obj = Author.new(f_name, l_name)
-    @@authors << author_obj
-    book.author = author_obj
-    
-    source_obj = Source.new(source)
-    @@sources << source_obj
-    book.source = source_obj
-    
-    label_obj = Label.new(label, label_color)
-    @@labels << label_obj
-    book.label = label_obj
-
-    @books << book
-
-    save_on_json(@books)
-    puts "books sucessfullly created"
-
+    @save.save_on_json(@books)
+    puts 'books sucessfullly created'
     @options.show_menu
   end
 
   def list_all_music_albums
     if @music_albums.empty?
-      puts "albums is empty"      
-    else  
-      puts "=============== Music_Albums =============="
+      puts 'albums is empty'
+    else
+      puts '=============== Music_Albums =============='
       @music_albums.each do |ele|
-        # p ele 
-        puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author) #{ele.author.first_name} #{ele.author.first_name} ->On spotify: #{ele.on_spotify}"
-
+        # p ele
+        puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author)
+        #{ele.author.first_name} #{ele.author.first_name} ->On spotify: #{ele.on_spotify}"
       end
-      puts "=============== Music_Albums =============="
+      puts '=============== Music_Albums =============='
     end
 
     @options.show_menu
   end
 
   def list_all_games
-    if @games.empty? 
-      puts "there is no games"
+    if @games.empty?
+      puts 'there is no games'
       @options.show_menu
     else
-      puts "=============== Games =============="
+      puts '=============== Games =============='
       @games.each do |ele|
-        # p ele 
-        puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author) #{ele.author.first_name} #{ele.author.first_name} Multiplayer-> #{ele.multiplayer} Last_played-> #{ele.last_played}"
-
+        puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author)
+        #{ele.author.first_name} #{ele.author.first_name} Multiplayer-> #{ele.multiplayer} Last_played->
+        #{ele.last_played}"
       end
-      puts "=============== Games =============="
+      puts '=============== Games =============='
     end
     @options.show_menu
   end
 
   def list_all_genres
     if @@genres.empty?
-      puts "there is no genders"      
-    else 
+      puts 'there is no genders'
+    else
       @@genres.each do |ele|
         puts '------------Genre----------------'
-        print "Title: ", ele.name 
+        print 'Title: ', ele.name
         puts
         puts '-------------Genre-----------------'
       end
@@ -291,14 +117,14 @@ class App
 
   def list_all_labels
     if @@labels.empty?
-      puts "there is no labels"      
-    else 
+      puts 'there is no labels'
+    else
       @@labels.each do |ele|
         puts '------------Labels----------------'
-        print "Title: ", ele.title 
-        puts 
+        print 'Title: ', ele.title
+        puts
         print 'Color: ', ele.color
-        puts 
+        puts
         puts '-------------Labels-----------------'
       end
     end
@@ -307,11 +133,11 @@ class App
 
   def list_all_authors
     if @@authors.empty?
-      puts "there is no authors"      
-    else 
+      puts 'there is no authors'
+    else
       @@authors.each do |ele|
         puts '------------Author----------------'
-        print "Author: ", ele.first_name
+        print 'Author: ', ele.first_name
         puts
         puts '-------------Genre-----------------'
       end
@@ -321,11 +147,11 @@ class App
 
   def list_all_sources
     if @@sources.empty?
-      puts "there is no sources"      
-    else 
+      puts 'there is no sources'
+    else
       @@sources.each do |ele|
         puts '------------Source----------------'
-        print "Source: ", ele.name 
+        print 'Source: ', ele.name
         puts
         puts '-------------Source-----------------'
       end
@@ -333,23 +159,22 @@ class App
     @options.show_menu
   end
 
-  def List_all_books
+  def list_all_books
     if @books.empty?
-      puts "books is empty"      
-    else  
+      puts 'books is empty'
+    else
       @books.each do |ele|
         puts '------------Books----------------'
-        print "Label: ", ele.label.title 
-        puts 
+        print 'Label: ', ele.label.title
+        puts
         print 'Author: ', ele.author.first_name
-        puts 
+        puts
         print 'Publisher : ', ele.publisher
-        puts 
+        puts
         print 'Genere :', ele.genre.name
-        puts 
+        puts
         print 'Publication Date :', ele.pub_date
         puts
-        puts '-------------Books-----------------'
       end
     end
 
@@ -357,7 +182,6 @@ class App
   end
 
   def exit
-    puts "thanks for using this app!"
+    puts 'thanks for using this app!'
   end
-
 end

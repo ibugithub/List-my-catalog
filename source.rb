@@ -1,4 +1,3 @@
-
 class Source
   attr_accessor :items, :id, :name
 

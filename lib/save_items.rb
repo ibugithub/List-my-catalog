@@ -1,7 +1,7 @@
-def save_on_json(array)
+class Save
+  def save_on_json(array)
     final_data = []
     array.each do |ele|
-
       data = {
         'type' => ele.class.name,
         'id' => ele.id,
@@ -12,20 +12,20 @@ def save_on_json(array)
         'last_name' => ele.author.last_name,
         'source' => ele.source.name,
         'label' => ele.label.title,
-        'label_color' => ele.label.color         
+        'label_color' => ele.label.color
       }
 
-      if ele.class.name == "Music_album"
+      if ele.instance_of?(::MusicAlbum)
         data['on_spotify'] = ele.on_spotify
-      elsif ele.class.name == "Game"
+      elsif ele.instance_of?(::Game)
         data['multiplayer'] = ele.multiplayer
         data['last_played'] = ele.last_played
-      elsif ele.class.name == "Book"
+      elsif ele.instance_of?(::Book)
         data['publisher'] = ele.publisher
         data['cover_state'] = ele.cover_state
       end
-      p 'the data is ', data
-      final_data << data      
-    end 
-      File.write("#{array[0].class.name}.json", JSON.generate(final_data)  )
+      final_data << data
+    end
+    File.write("#{array[0].class.name}.json", JSON.generate(final_data))
+  end
 end
