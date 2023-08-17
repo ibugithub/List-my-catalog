@@ -1,33 +1,56 @@
-require 'json'
-# require './musicAlbum'
-# require './genre'
-# require './source'
-# require './author'
-# require './label'
-require './book'
+# def load_from_file(file_name)
+#   begin
+#     data = JSON.parse(File.read(file_name))
+#   rescue StandardError
+#     data = []
+#   end
 
-new_data = {
-  'pub_date':  '2022-12-12',
-  'publisher':  'publisher2',
-  'cover_state':  'cover-2',
-  'first_name': 'benja',
-  'last_name': 'mendez',
-}
+#   final_data = []
 
-def load_file(fileName)  
-  begin
-    JSON.parse(File.read(fileName)    )
-  rescue 
-    []
-  end
-end
+#   data.each do |ele|
+#     ele['type']
+#     ele['id']
+#     pub_date = ele['pub_date']
+#     ele['archived']
+#     genre = ele['genre']
+#     f_name = ele['first_name']
+#     l_name = ele['last_name']
+#     source = ele['source']
+#     label = ele['label']
+#     label_color = ele['label_color']
+#     on_spotify = ele['on_spotify']
+#     multiplayer = ele['multiplayer']
+#     last_played = ele['last_played']
+#     publisher = ele['publisher']
+#     cover_state = ele['cover_state']
 
-def add_book(filename, new_data)
-  prev_data = load_file(filename)
-  prev_data << new_data
-  File.write('books.json', JSON.generate(prev_data))
-end
+#     case ele['type']
+#     when 'Music_album'
+#       new_item = Music_album.new(pub_date, on_spotify)
+#     when 'Game'
+#       new_item = Game.new(pub_date, multiplayer, last_played)
+#     when 'Book'
+#       new_item = Book.new(pub_date, publisher, cover_state)
+#     end
 
-add_book('books.json', new_data)
+#     genre_obj = Genre.new(genre)
+#     @@genres << genre_obj
+#     new_item.genre = genre_obj
 
+#     author_obj = Author.new(f_name, l_name)
+#     @@authors << author_obj
+#     new_item.author = author_obj
 
+#     source_obj = Source.new(source)
+#     @@sources << source_obj
+#     new_item.source = source_obj
+
+#     label_obj = Label.new(label, label_color)
+#     @@labels << label_obj
+#     new_item.label = label_obj
+
+#     final_data << new_item
+#   end
+
+#   final_data
+# end

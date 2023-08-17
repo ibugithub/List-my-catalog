@@ -1,8 +1,7 @@
 require 'date'
 
 class Item
-  attr_reader :pub_date
-  attr_accessor :genre, :id, :archived, :author, :source, :label 
+  attr_reader :pub_date, :genre, :id, :archived, :author, :source, :label
 
   def initialize(pub_date, archived: false)
     @id = Random.rand(1..200)
@@ -12,12 +11,12 @@ class Item
       puts 'Invalid date format. Please use the format YYYY-MM-DD.'
       exit
     end
-    @archived = archived    
+    @archived = archived
   end
 
   def genre=(genre)
     @genre = genre
-    genre.add_item(self) unless genre.items.include?(self)    
+    genre.add_item(self) unless genre.items.include?(self)
   end
 
   def author=(author)
@@ -37,7 +36,7 @@ class Item
 
   def can_be_archived?
     @since_pub_date = (Date.today - @pub_date)
-    @since_pub_date  >= 10
+    @since_pub_date >= 10
   end
 
   def move_to_archive
