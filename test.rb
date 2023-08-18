@@ -1,17 +1,17 @@
 # def load_from_file(file_name)
 #   begin
 #     data = JSON.parse(File.read(file_name))
-#   rescue => exception
+#   rescue StandardError
 #     data = []
 #   end
 
 #   final_data = []
 
 #   data.each do |ele|
-#     type = ele['type']
-#     id = ele['id']
+#     ele['type']
+#     ele['id']
 #     pub_date = ele['pub_date']
-#     archived = ele['archived']
+#     ele['archived']
 #     genre = ele['genre']
 #     f_name = ele['first_name']
 #     l_name = ele['last_name']
@@ -24,11 +24,12 @@
 #     publisher = ele['publisher']
 #     cover_state = ele['cover_state']
 
-#     if ele['type'] == "Music_album"
+#     case ele['type']
+#     when 'Music_album'
 #       new_item = Music_album.new(pub_date, on_spotify)
-#     elsif ele['type'] == "Game"
+#     when 'Game'
 #       new_item = Game.new(pub_date, multiplayer, last_played)
-#     elsif ele['type'] == "Book"
+#     when 'Book'
 #       new_item = Book.new(pub_date, publisher, cover_state)
 #     end
 

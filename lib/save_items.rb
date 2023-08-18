@@ -15,17 +15,26 @@ class Save
         'label_color' => ele.label.color
       }
 
-      if ele.instance_of?(::MusicAlbum)
-        data['on_spotify'] = ele.on_spotify
-      elsif ele.instance_of?(::Game)
-        data['multiplayer'] = ele.multiplayer
-        data['last_played'] = ele.last_played
-      elsif ele.instance_of?(::Book)
-        data['publisher'] = ele.publisher
-        data['cover_state'] = ele.cover_state
-      end
-      final_data << data
+      type_data = diff_classes(ele, data)
+
+
+
+      final_data << type_data
     end
     File.write("#{array[0].class.name}.json", JSON.generate(final_data))
+  end
+
+  def diff_classes(ele, data)
+    if ele.instance_of?(::MusicAlbum)
+      data['on_spotify'] = ele.on_spotify
+    elsif ele.instance_of?(::Game)
+      data['multiplayer'] = ele.multiplayer
+      data['last_played'] = ele.last_played
+    elsif ele.instance_of?(::Book)
+      data['publisher'] = ele.publisher
+      data['cover_state'] = ele.cover_state
+    end
+
+    data
   end
 end

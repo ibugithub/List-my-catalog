@@ -82,7 +82,6 @@ class App
         puts "->id) #{ele.id} ->pub-date: #{ele.pub_date} ->label) #{ele.label.title} Author)
         #{ele.author.first_name} #{ele.author.first_name} ->On spotify: #{ele.on_spotify}"
       end
-      puts '=============== Music_Albums =============='
     end
 
     @options.show_menu
@@ -99,7 +98,6 @@ class App
         #{ele.author.first_name} #{ele.author.first_name} Multiplayer-> #{ele.multiplayer} Last_played->
         #{ele.last_played}"
       end
-      puts '=============== Games =============='
     end
     @options.show_menu
   end
@@ -112,7 +110,6 @@ class App
         puts '------------Genre----------------'
         print 'Title: ', ele.name
         puts
-        puts '-------------Genre-----------------'
       end
     end
     @options.show_menu
