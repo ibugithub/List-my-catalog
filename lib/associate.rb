@@ -36,7 +36,6 @@ class Associate
 
   def extract(data)
     final_data = []
-
     data.each do |ele|
       ele['type']
       ele['pub_date']
@@ -99,11 +98,9 @@ class Associate
     source_obj = Source.new(source)
     @sources << source_obj
     new_item.source = source_obj
-
     label_obj = Label.new(label, label_color)
     @labels << label_obj
     new_item.label = label_obj
-
     new_item
   end
 
