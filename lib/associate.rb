@@ -18,6 +18,7 @@ class Associate
     genre_obj = Genre.new(genre)
     p 'adding genres'
     @genres << genre_obj
+    
     item.genre = genre_obj
 
     author_obj = Author.new(f_name, l_name)
