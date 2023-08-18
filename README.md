@@ -121,7 +121,7 @@ To run the project:
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/ibugithub/List-my-catalog.git).
+Feel free to check the [issues page](https://github.com/ibugithub/List-my-catalog/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

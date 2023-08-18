@@ -1,6 +1,5 @@
 require './item'
 require './genre'
-# require 'pry'
 
 class Book < Item
   attr_accessor :publisher, :cover_state
@@ -15,20 +14,3 @@ class Book < Item
     super || @cover_state == 'bad'
   end
 end
-
-# puts " publish date ?"
-# date = gets.chomp
-# puts 'publisher?'
-# publisher = gets.chomp
-# puts 'author first name?'
-# author = gets.chomp
-# puts 'author last name?'
-# author = gets.chomp
-# puts 'genre?'
-# genre = gets.chomp
-# puts 'source?'
-# source = gets.chomp
-# puts 'label?'
-# label = gets.chomp
-# puts 'author last name?'
-# author = gets.chomp

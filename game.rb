@@ -8,4 +8,8 @@ class Game < Item
     @multiplayer = multiplayer
     @last_played = last_played
   end
+
+  def can_be_archived?
+    super && (Time.now - @last_played) > 2 * 365 * 24 * 60 * 60
+  end
 end
