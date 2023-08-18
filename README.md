@@ -38,7 +38,6 @@
 - `Used linters for cleaner code` No linter errors.
 
 
-
 ### video walkthrough
 
 https://drive.google.com/file/d/11Sc9g1w5ReIRNrI9j4NfRqMC0LcW5bOS/view?usp=sharing
