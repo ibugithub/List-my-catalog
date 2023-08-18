@@ -3,7 +3,6 @@ require 'json'
 class Associate
   attr_accessor :genres, :sources, :labels, :authors
 
-
   def initialize
     @genres = []
     @sources = []
@@ -72,7 +71,6 @@ class Associate
     publisher = element['publisher']
     cover_state = element['cover_state']
 
-
     case type
     when 'MusicAlbum'
       new_item = MusicAlbum.new(pub_date, on_spotify)
@@ -94,7 +92,6 @@ class Associate
     genre_obj = Genre.new(genre)
     @genres << genre_obj
     new_item.genre = genre_obj
-
 
     source_obj = Source.new(source)
     @sources << source_obj

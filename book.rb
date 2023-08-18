@@ -16,16 +16,6 @@ class Book < Item
   end
 end
 
-
-
-
-
-
-
-
-
-
-
 # puts " publish date ?"
 # date = gets.chomp
 # puts 'publisher?'

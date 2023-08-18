@@ -17,8 +17,6 @@ class Save
 
       type_data = diff_classes(ele, data)
 
-
-
       final_data << type_data
     end
     File.write("#{array[0].class.name}.json", JSON.generate(final_data))
