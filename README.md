@@ -37,6 +37,13 @@
 - `Based on UML graphic` Includes a database design that we will use later to conect to a real progres SQL.
 - `Used linters for cleaner code` No linter errors.
 
+
+
+### video walkthrough
+
+https://drive.google.com/file/d/11Sc9g1w5ReIRNrI9j4NfRqMC0LcW5bOS/view?usp=sharing
+
+
 <!-- GETTING STARTED -->
 
 ## 💻 Getting Started <a name="getting-started"></a>
@@ -59,6 +66,7 @@
 To get a local copy up and running cloning this repo `https://github.com/ibugithub/List-my-catalog.git`.
 
 ### Prerequisites
+
 
 -1 Have installed any code editor and Ruby 
 
