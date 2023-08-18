@@ -112,6 +112,15 @@ To run the project:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+<!-- FUTURE FEATURES -->
+
+## 🔭 Future Features <a name="future-features"></a>
+
+- Will add more data
+- Will use database instead of JSON file to save data
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
