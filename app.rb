@@ -11,8 +11,6 @@ require './lib/associate'
 require './lib/collect_gen'
 
 class App
-
-  
   def initialize(options)
     @options = options
     @associate = Associate.new

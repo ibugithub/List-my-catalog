@@ -2,7 +2,7 @@ require 'json'
 
 class Associate
   attr_accessor :genres, :sources, :labels, :authors
-  
+
 
   def initialize
     @genres = []
@@ -35,11 +35,7 @@ class Associate
   end
 
   def extract(data)
-    p 'extraging data'
-
     final_data = []
-    # p data,'data'
-
     data.each do |ele|
       ele['type']
       ele['id']
@@ -65,44 +61,34 @@ class Associate
       when 'Book'
         new_item = Book.new(pub_date, publisher, cover_state)
       end
-      
       final_data << add_associate(new_item, genre, f_name, l_name, source, label, label_color)
     end
 
     final_data
-    # p 'fianl data'
-    
   end
 
   def add_associate(new_item, genre, f_name, l_name, source, label, label_color)
-    
     genre_obj = Genre.new(genre)
     @genres << genre_obj
     new_item.genre = genre_obj
-    p 'adding genres'
     author_obj = Author.new(f_name, l_name)
     @authors << author_obj
     new_item.author = author_obj
-
     source_obj = Source.new(source)
     @sources << source_obj
     new_item.source = source_obj
-
     label_obj = Label.new(label, label_color)
     @labels << label_obj
     new_item.label = label_obj
-
     new_item
   end
 
-  def load_from_file(file_name)   
-    
+  def load_from_file(file_name)
     begin
-      data = JSON.parse(File.read(file_name))            
+      data = JSON.parse(File.read(file_name))
     rescue StandardError
       data = []
     end
     extract(data)
   end
-
 end
