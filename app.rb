@@ -27,11 +27,10 @@ class App
   end
 
   def add_music_album
-    
     gen_info = @collect.collect_gen_info('music album')
     puts 'is it on spotify (y) or (n)?'
     on_spotify = gets.chomp == 'y'
-    
+
     item = MusicAlbum.new('2022-12-12', on_spotify)
 
     album_data = @associate.associate_item(item, gen_info)
@@ -40,7 +39,6 @@ class App
     puts 'Album created sucessfully'
     @save.save_on_json(@music_albums)
     @options.show_menu
-
   end
 
   def add_game
